@@ -4,6 +4,7 @@ import fr.lefuturiste.urlshortener.Container;
 import org.json.*;
 import java.io.*;
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -165,7 +166,8 @@ public class HttpServer {
                         foundHandlerUrl = true;
                         if (handler.getMethod().equals(request.getMethod())) {
                             try {
-                                response = (Response) handler.getHandlerMethod().invoke(handler.getHandlerController(), request, response);
+                                Method method = handler.getHandlerMethod();
+                                response = (Response) method.invoke(handler.getHandlerController(), request, response);
                             } catch (IllegalAccessException | InvocationTargetException e) {
                                 e.printStackTrace();
                             }

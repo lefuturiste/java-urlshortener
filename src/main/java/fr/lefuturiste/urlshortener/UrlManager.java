@@ -3,6 +3,8 @@ package fr.lefuturiste.urlshortener;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.result.DeleteResult;
+import com.mongodb.client.result.UpdateResult;
 import fr.lefuturiste.urlshortener.Models.Url;
 import org.bson.Document;
 import org.bson.types.ObjectId;
@@ -29,7 +31,7 @@ public class UrlManager {
     }
 
     public ArrayList<JSONObject> getMany() {
-        MongoCursor<Document> mongoCursor = this.getCollection().find().iterator();
+        MongoCursor<Document> mongoCursor = this.getCollection().find(new Document()).iterator();
         ArrayList<JSONObject> urls = new ArrayList<>();
         while (mongoCursor.hasNext()) {
             Document document = mongoCursor.next();
@@ -38,11 +40,27 @@ public class UrlManager {
         return urls;
     }
 
-    public JSONObject getOne(String id) {
+    public Url getOne(String id) {
         Document document = new Document();
         document.append("_id", new ObjectId(id));
         MongoCursor<Document> mongoCursor = this.getCollection().find(document).iterator();
         if (!mongoCursor.hasNext()) return null;
-        return Url.fromDocument(mongoCursor.next()).toJsonObject();
+        return Url.fromDocument(mongoCursor.next());
+    }
+
+    public UpdateResult save(Url url) {
+        return this.getCollection().replaceOne(url.toBsonFilterDocument(), url.toBsonDocument());
+    }
+
+    public DeleteResult destroy(Url url) {
+        return this.getCollection().deleteOne(url.toBsonFilterDocument());
+    }
+
+    public Url getOneViaSlug(String slug) {
+        Document document = new Document();
+        document.append("slug", slug);
+        MongoCursor<Document> mongoCursor = this.getCollection().find(document).iterator();
+        if (!mongoCursor.hasNext()) return null;
+        return Url.fromDocument(mongoCursor.next());
     }
 }

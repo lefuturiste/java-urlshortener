@@ -26,6 +26,9 @@ public class App {
         httpServer.addHandler("POST", "/api/url", UrlController.class, "store");
         httpServer.addHandler("PUT", "/api/url/:id", UrlController.class, "update");
         httpServer.addHandler("DELETE", "/api/url/:id", UrlController.class, "destroy");
+
+        httpServer.addHandler("GET", "/:slug", UrlController.class, "redirect");
+
         httpServer.start();
     }
 }
