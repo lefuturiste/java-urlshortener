@@ -43,6 +43,10 @@ Run the test with maven:
 
 If you want to build the source code you must use maven:
 
-`mvn package`
+`mvn clean compile assembly:single`
 
 You will get a clean .jar in the `target/` directory
+
+You can now execute the jar with the command:
+
+`java -cp ./target/lefuturiste-urlshortener-1.0-SNAPSHOT-jar-with-dependencies.jar fr.lefuturiste.urlshortener.App`
