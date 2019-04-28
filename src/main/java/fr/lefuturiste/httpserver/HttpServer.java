@@ -19,7 +19,7 @@ public class HttpServer {
     private String listenInterface;
     private int port;
     private ServerSocket serverSocket;
-    private ArrayList<Handler> handlers = new ArrayList<Handler>();
+    private ArrayList<Handler> handlers = new ArrayList<>();
     private Container container;
 
     public HttpServer() {
