@@ -6,6 +6,10 @@ A simple web API made in Java to manage and short urls!
 
 You will soon be capable of downloading .jar directly from the github release. But for now you must build your own .jar by cloning this repository.
 
+## Docker
+
+You easily deploy the web app using docker, you will need to use the `docker-compose.yml` provided in this repository.
+
 ### Requirements
 
 - Maven in cli

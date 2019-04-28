@@ -6,5 +6,7 @@ WORKDIR /app
 # build the app
 RUN mvn clean compile assembly:single
 WORKDIR /app/target
+ENV PORT 80
+EXPOSE 80
 # java -cp /app/target/*.jar fr.lefuturiste.urlshortener.App
 CMD ["sh", "/app/start.sh"]

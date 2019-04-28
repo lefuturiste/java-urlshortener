@@ -1,0 +1,16 @@
+version: '3'
+services:
+  mongo:
+    image: mongo
+    restart: always
+  app:
+    image: lefuturiste/java-urlshortener
+    restart: always
+    depends_on:
+      - mongo
+    links:
+      - mongo
+    ports:
+      - "8082:80"
+    environment:
+      - MONGO_URI=mongodb://mongo:27017
