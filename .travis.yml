@@ -2,8 +2,8 @@ language: java
 script: mvn clean compile assembly:single
 deploy:
   provider: releases
-  api_key: "GITHUB OAUTH TOKEN"
-  file: "target/*.jar"
-  skip_cleanup: true
+  api_key:
+    secure: $API_KEY
+  file: target/*.jar
   on:
-    tags: true
+    repo: lefuturiste/java-urlshortener
