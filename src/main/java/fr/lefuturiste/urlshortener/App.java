@@ -6,18 +6,19 @@ import com.mongodb.client.MongoDatabase;
 import fr.lefuturiste.urlshortener.Controllers.HomeController;
 import fr.lefuturiste.urlshortener.Controllers.UrlController;
 import fr.lefuturiste.httpserver.HttpServer;
-
 import java.io.IOException;
 
 public class App {
     public static void main(String[] args) throws IOException {
         Container container = new Container();
+
         MongoClient mongoClient = MongoClients.create(System.getenv("MONGO_URI") == null ? "mongodb://localhost:27017" : System.getenv("MONGO_URI"));
         MongoDatabase mongoDatabase = mongoClient.getDatabase("urlshortener");
+
         container.set(MongoDatabase.class, mongoDatabase);
         container.set(UrlManager.class, new UrlManager(mongoDatabase));
 
-        HttpServer httpServer = new HttpServer(8082);
+        HttpServer httpServer = new HttpServer(System.getenv("PORT") == null ? 8082 : Integer.parseInt(System.getenv("PORT")));
         httpServer.setContainer(container);
         httpServer.addHandler("GET", "/", HomeController.class, "index");
         // urls
@@ -29,6 +30,9 @@ public class App {
 
         httpServer.addHandler("GET", "/:slug", UrlController.class, "redirect");
 
-        httpServer.start();
+        httpServer.start(() -> {
+            System.out.println("Server listening: " + httpServer.getServerSocket().toString());
+            return true;
+        });
     }
 }

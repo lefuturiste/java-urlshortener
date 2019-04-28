@@ -9,6 +9,7 @@ import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.*;
+import java.util.concurrent.Callable;
 import java.util.regex.Matcher;
 
 public class HttpServer {
@@ -35,12 +36,22 @@ public class HttpServer {
     }
 
     public void start() throws IOException {
+        this.start(null);
+    }
+
+    public void start(Callable<Boolean> onServerListen) throws IOException {
         InetAddress inetAddress = null;
         switch (this.listenInterface) {
             case "loopback": inetAddress = InetAddress.getLoopbackAddress(); break;
             case "localhost": inetAddress = InetAddress.getLocalHost(); break;
         }
         this.serverSocket = new ServerSocket(this.port, 0, inetAddress);
+        try {
+            if (onServerListen != null)
+                onServerListen.call();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         do {
             Socket socket = this.serverSocket.accept();
             new ServerThread(socket, this.handlers).start();
@@ -121,6 +132,7 @@ public class HttpServer {
                     requestLine = reader.readLine();
                 }
 
+                // log request
                 System.out.println(request.getProtocol() + " - " + request.getMethod() + " - " + request.getUrl());
 
                 // if therese is a content length present on the request, read the body
