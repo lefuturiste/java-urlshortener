@@ -4,6 +4,6 @@ deploy:
   provider: releases
   api_key:
     secure: fzHNHtTAr9j4mg6aws2RwXHpxzuCXWjE+gVLh2j4AL92/7I68o/F0+yWv717PTURhwT76MEoqwpcE5vX6hmN0RBoTX7BA29sI117/TO1BQLrOAhwT4VM2B1jsqCpBknWlAsVt/FexaW6A3eFENlrHzN0rbtWJkuC7Lp/cJtGLFDz+WAH/+8EP5NaqHWMariD5vrRDQuDOlZg4aSy0ohO+pN2o8TZro7ykH6GpyVZm0fx9UdTl3WY+9Nabmv22hwklHbeVuHZGb3bvBk3Bq/V7nX0FaowGVb9arrGlefx2rZrsBx+a/Mvb9S/IPwErQnfnXM7OzI/l1Hi6xar+eAZiVFYMca4Dul8+BYABH/1yhUFPWDoNvzOvkHLkxRhdGAqARNc+wGpOvdZ1Y+Vchs31oPPl0BBwDKnfZTuwPqkxi3EJ/lW9ol0MHoAI95iMCOa5cE71vPhb/mh30d46mBJ9drtQ40vyPmT7fHxsKUr9vPLG+nqkEB/2Xoxy9Y8kBcRO+FHHdAkGN8hWppXi6huJWC51MJft/wtCRQ20QKV2K18Mke5cG7wJvpNQtPdFx/YKrwW/2X8v3UgPHRly2MvBtde1uz+lpgpUkH4e1Ccz6zI24zodjvYsoVzjbXPxuQv766KAieqX3c7YhXYH8bTs+giPYgBv4jgPSKEy+yDAt0=
-  file: target/*.jar
+  file: target/app.jar
   on:
-    repo: lefuturiste/java-urlshortener
+    tags: true
