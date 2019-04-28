@@ -1,2 +1,9 @@
 language: java
 script: mvn clean compile assembly:single
+deploy:
+  provider: releases
+  api_key: "GITHUB OAUTH TOKEN"
+  file: "target/*.jar"
+  skip_cleanup: true
+  on:
+    tags: true
